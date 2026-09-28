@@ -1,6 +1,9 @@
 #ifndef AUTO_AIM__YOLO_HPP
 #define AUTO_AIM__YOLO_HPP
 
+#include <list>
+#include <memory>
+#include <string>
 #include <opencv2/opencv.hpp>
 
 #include "armor.hpp"
@@ -10,8 +13,8 @@ namespace auto_aim
 class YOLOBase
 {
 public:
+  virtual ~YOLOBase() = default;
   virtual std::list<Armor> detect(const cv::Mat & img, int frame_count) = 0;
-
 };
 
 class YOLO

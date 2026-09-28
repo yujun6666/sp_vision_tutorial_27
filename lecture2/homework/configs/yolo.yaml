@@ -1,4 +1,8 @@
-#需要自行将配置文件中的相机参数补全
+# Camera settings: exposure time is in microseconds.
+camera:
+  exposure_us: 10000
+  gain: 20
+  frame_rate: 60
 
 yolo_name: yolov5
 yolov5_model_path: assets/yolov5.xml
@@ -28,4 +32,3 @@ auto_charge:
   adaptive_thresh_win_size_max: 23
   adaptive_thresh_win_size_step: 10
   adaptive_thresh_constant: 7.0
-  

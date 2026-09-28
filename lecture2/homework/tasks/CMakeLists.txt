@@ -1,14 +1,19 @@
-cmake_minimum_required(VERSION 3.16)
-
-set(OpenVINO_DIR "/opt/intel/openvino_2024.6.0/runtime/cmake")
-
-find_package(OpenVINO REQUIRED COMPONENTS Runtime)
-
 add_library(tasks OBJECT
-    armor.cpp
-    yolo.cpp
-    yolos/yolov5.cpp
-    apriltag_detector.cpp
+  armor.cpp
+  yolo.cpp
+  yolos/yolov5.cpp
 )
 
-target_link_libraries(tasks io openvino::runtime )
+if(BUILD_APRILTAG)
+  target_sources(tasks PRIVATE apriltag_detector.cpp)
+endif()
+
+target_link_libraries(tasks PUBLIC
+  io
+  tools
+  openvino::runtime
+  Eigen3::Eigen
+  fmt::fmt
+  yaml-cpp
+  ${OpenCV_LIBS}
+)
