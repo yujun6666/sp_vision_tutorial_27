@@ -1,7 +1,7 @@
 # Camera settings: exposure time is in microseconds.
 camera:
   exposure_us: 10000
-  gain: 20
+  gain: 0
   frame_rate: 60
 
 yolo_name: yolov5

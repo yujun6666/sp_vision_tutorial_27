@@ -2,6 +2,7 @@ add_library(tasks OBJECT
   armor.cpp
   yolo.cpp
   yolos/yolov5.cpp
+  apriltag_detector.cpp
 )
 
 if(BUILD_APRILTAG)
