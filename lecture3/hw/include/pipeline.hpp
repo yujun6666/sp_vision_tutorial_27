@@ -5,8 +5,10 @@
 #include "image_processor.hpp"
 #include "statistics.hpp"
 
+#include <exception>
 #include <filesystem>
 #include <memory>
+#include <mutex>
 #include <thread>
 #include <vector>
 
@@ -26,6 +28,7 @@ public:
     Pipeline(const Pipeline &) = delete;
     Pipeline &operator=(const Pipeline &) = delete;
 
+    // 生命周期方法由调用者顺序执行，流水线只能启动一次。
     void start();
     void wait();
     StatisticsSnapshot statistics() const;
@@ -33,12 +36,19 @@ public:
 private:
     void producerLoop();
     void workerLoop(int worker_id);
+    void joinThreads();
+    void recordError(std::exception_ptr error);
 
     std::unique_ptr<FrameSource> source_;
     PipelineConfig config_;
     BlockingQueue<Frame> queue_;
     ImageProcessor processor_;
     Statistics statistics_;
+
     std::thread producer_;
     std::vector<std::thread> workers_;
+
+    bool started_ = false;
+    std::mutex error_mutex_;
+    std::exception_ptr error_;
 };
